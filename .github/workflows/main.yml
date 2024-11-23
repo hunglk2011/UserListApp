@@ -62,7 +62,7 @@ jobs:
       #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Thêm Azure Publish Profile secret
       #     package: . 
 
-      # Azure đã hết free nên nhóm chúng em dùng Render cloud để build, test, artifact và deploy 
+      # Azure đã hết free nên nhóm chúng em dùng Render cloud để triển khai thêm Artifact 
       - name: Deploy to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
@@ -71,6 +71,6 @@ jobs:
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
             -d '{
-              "serviceId": "srv-ct0r0ka3esus73esqa6g",
+              "serviceId": "srv-ct103td2ng1s73e2u1e0",
               "clearCache": true
             }'
