@@ -30,18 +30,31 @@ jobs:
       # Step 4: Run tests
       - name: test
         run: npm test
+     # Step 6: Save Build Artifacts
+      - name: Save Artifacts
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+         name: build-artifacts
+         path: ./public
 
   deploy:
     runs-on: ubuntu-latest
     needs: build  # Đảm bảo chỉ chạy sau khi job 'build' thành công
-    if: github.ref == 'refs/heads/main'  # Chỉ chạy nếu nhánh là 'main'
+    if: github.ref == 'refs/heads/main' 
 
     steps:
       # Step 1: Checkout the source code
       - name: Checkout Source
         uses: actions/checkout@v3
 
-      # Step 2: Deploy to Azure App Service
+      # Step 2: Download Artifacts
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
+      # Step 3: Deploy to Render
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
         with:
